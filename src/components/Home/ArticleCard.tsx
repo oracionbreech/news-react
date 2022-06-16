@@ -18,7 +18,7 @@ const ArticleCard: React.FC<{
   return (
     <div
       onClick={onClick}
-      className='p-6 max-w-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700'
+      className='cursor-pointer p-6 max-w-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700'
     >
       <div className='h-5/6'>
         <span>

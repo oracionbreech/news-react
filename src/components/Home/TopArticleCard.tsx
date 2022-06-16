@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Models
 import { Article as IArticle } from '../../models/articles';
@@ -6,8 +7,19 @@ import { Article as IArticle } from '../../models/articles';
 const TopArticleCard: React.FC<{
   article: IArticle;
 }> = ({ article }) => {
+  const navigate = useNavigate();
+
+  const onClick = () => {
+    navigate(`/article/${article.id}`, {
+      replace: true,
+    });
+  };
+
   return (
-    <div className='sm:p-2 md:p-6 cursor-pointer mb-3 p-6 w-full h-400px bg-white shadow-sm dark:bg-gray-800 md:text-red-400'>
+    <div
+      onClick={onClick}
+      className='sm:p-2 md:p-6 cursor-pointer mb-3 p-6 w-full h-400px bg-white shadow-sm dark:bg-gray-800 md:text-red-400'
+    >
       <div className='h-5/6'>
         <div className='w-full justify-center flex mb-3'>
           <img
@@ -16,17 +28,20 @@ const TopArticleCard: React.FC<{
             alt=''
           />
         </div>
-        <a href='/'>
+        <span>
           <h5 className='mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
             {article.title}
           </h5>
-        </a>
+        </span>
         <p className='font-normal text-gray-700 dark:text-gray-400'>
           {article.description}
         </p>
       </div>
 
-      <button className='mt-10 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
+      <button
+        onClick={onClick}
+        className='mt-10 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+      >
         Read more
         <svg
           className='ml-2 -mr-1 w-4 h-4'
