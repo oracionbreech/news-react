@@ -36,11 +36,11 @@ const Article = () => {
             alt=''
           />
         </div>
-        <a href='/'>
+        <span>
           <h5 className='mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
             {article?.title}
           </h5>
-        </a>
+        </span>
         <p className='font-normal text-gray-700 dark:text-gray-400'>
           {article?.description}
         </p>
