@@ -10,7 +10,7 @@ export const getTopArticles =
     const { data } = await newsAPI.get<{
       articles: Article[];
     }>(
-      `/top-headlines?apiKey=${NEWS_API_KEY}&country=us`
+      `/top-headlines?apiKey=${NEWS_API_KEY}&country=us&pageSize=19`
     );
 
     return data;
