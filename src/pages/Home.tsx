@@ -26,7 +26,7 @@ const Home = () => {
     return <h1>An error occurred</h1>;
 
   return (
-    <div className='p-4'>
+    <div>
       {data && data.articles && (
         <TopArticle
           article={
@@ -34,7 +34,7 @@ const Home = () => {
           }
         />
       )}
-      <div className='grid grid-cols-4 sm:grid-cols-2 md:grid-cols-3 gap-2 lg:grid-cols-4'>
+      <div className='grid sm:grid-cols-2 md:grid-cols-2 gap-3 lg:grid-cols-3 p-4'>
         {data &&
           data.articles &&
           data.articles

@@ -7,11 +7,11 @@ const TopArticle: React.FC<{
   article: IArticle;
 }> = ({ article }) => {
   return (
-    <div className='cursor-pointer mb-3 p-6 w-full h-400px bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700'>
+    <div className='sm:p-2 md:p-6 cursor-pointer mb-3 p-6 w-full h-400px bg-white shadow-sm dark:bg-gray-800 md:text-red-400'>
       <div className='h-5/6'>
-        <div className='w-full justify-center flex'>
+        <div className='w-full justify-center flex mb-3'>
           <img
-            className='rounded-t-lg'
+            className='md:rounded-t-lg md:w-8/12 w-12/12'
             src={article.urlToImage}
             alt=''
           />
