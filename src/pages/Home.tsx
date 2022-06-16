@@ -13,13 +13,34 @@ import { Article as IArticle } from '../models/articles';
 
 // Services
 import { getTopArticles } from '../services/newsapi/getTopArticles';
+import { useDispatch } from 'react-redux';
+import { updateArticles } from '../store/articles/articleSlice';
+import md5 from 'md5';
 
 const Home = () => {
   usePageTitle('Home');
+
+  const dispatch = useDispatch();
+
   const { data, isLoading, error } =
     useQuery(
       'articles',
-      getTopArticles
+      getTopArticles,
+      {
+        onSuccess: (data) => {
+          const hashed =
+            data.articles.map(
+              (article) => ({
+                ...article,
+                id: md5(article.title),
+              })
+            );
+          dispatch(
+            updateArticles(hashed)
+          );
+          data.articles = hashed;
+        },
+      }
     );
 
   if (isLoading) return <Loading />;

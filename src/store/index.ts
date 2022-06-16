@@ -1,8 +1,13 @@
-import { configureStore } from '@reduxjs/toolkit';
+import {
+  combineReducers,
+  configureStore,
+} from '@reduxjs/toolkit';
+
+// Slices
 import { articleSlice } from './articles/articleSlice';
 
 export const store = configureStore({
-  reducer: {
+  reducer: combineReducers({
     articles: articleSlice.reducer,
-  },
+  }),
 });
