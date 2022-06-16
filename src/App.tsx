@@ -1,9 +1,37 @@
 import React from 'react';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from 'react-router-dom';
+
+// Constants
+import { routes } from './constants/app';
+
+// Styles
 import './App.css';
 
 function App() {
   return (
-    <h1 className='text-3xl'>Hello</h1>
+    <BrowserRouter>
+      <Routes>
+        {routes.map(
+          ({
+            element: Element,
+            path,
+            name,
+          }) => {
+            return (
+              <Route
+                key={name}
+                path={path}
+                element={<Element />}
+              />
+            );
+          }
+        )}
+      </Routes>
+    </BrowserRouter>
   );
 }
 
