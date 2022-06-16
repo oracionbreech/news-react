@@ -11,6 +11,7 @@ import {
 
 // Constants
 import { routes } from './constants/app';
+import NavBar from './components/NavBar';
 
 const queryClient = new QueryClient();
 
@@ -19,6 +20,7 @@ function App() {
     <QueryClientProvider
       client={queryClient}
     >
+      <NavBar />
       <BrowserRouter>
         <Routes>
           {routes.map(
