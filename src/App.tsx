@@ -4,34 +4,41 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
 
 // Constants
 import { routes } from './constants/app';
 
-// Styles
-import './App.css';
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {routes.map(
-          ({
-            element: Element,
-            path,
-            name,
-          }) => {
-            return (
-              <Route
-                key={name}
-                path={path}
-                element={<Element />}
-              />
-            );
-          }
-        )}
-      </Routes>
-    </BrowserRouter>
+    <QueryClientProvider
+      client={queryClient}
+    >
+      <BrowserRouter>
+        <Routes>
+          {routes.map(
+            ({
+              element: Element,
+              path,
+              name,
+            }) => {
+              return (
+                <Route
+                  key={name}
+                  path={path}
+                  element={<Element />}
+                />
+              );
+            }
+          )}
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 
