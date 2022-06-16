@@ -21,13 +21,13 @@ const NavBar = () => {
                 xmlns='http://www.w3.org/2000/svg'
                 fill='none'
                 viewBox='0 0 24 24'
-                stroke-width='2'
+                strokeWidth='2'
                 stroke='currentColor'
                 aria-hidden='true'
               >
                 <path
-                  stroke-linecap='round'
-                  stroke-linejoin='round'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
                   d='M4 6h16M4 12h16M4 18h16'
                 />
               </svg>
@@ -37,13 +37,13 @@ const NavBar = () => {
                 xmlns='http://www.w3.org/2000/svg'
                 fill='none'
                 viewBox='0 0 24 24'
-                stroke-width='2'
+                strokeWidth='2'
                 stroke='currentColor'
                 aria-hidden='true'
               >
                 <path
-                  stroke-linecap='round'
-                  stroke-linejoin='round'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
                   d='M6 18L18 6M6 6l12 12'
                 />
               </svg>
@@ -62,6 +62,13 @@ const NavBar = () => {
                 >
                   Home
                 </a>
+                <a
+                  href='/?query='
+                  className='hover:bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium'
+                  aria-current='page'
+                >
+                  Search
+                </a>
               </div>
             </div>
           </div>
@@ -75,10 +82,17 @@ const NavBar = () => {
         <div className='px-2 pt-2 pb-3 space-y-1'>
           <a
             href='/'
-            className='bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium'
+            className='text-white block px-3 py-2 rounded-md text-base font-medium'
             aria-current='page'
           >
             Home
+          </a>
+          <a
+            href='/?query='
+            className='text-white block px-3 py-2 rounded-md text-base font-medium'
+            aria-current='page'
+          >
+            Search
           </a>
         </div>
       </div>

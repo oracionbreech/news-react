@@ -10,9 +10,12 @@ const ArticleCard: React.FC<{
   const navigate = useNavigate();
 
   const onClick = () => {
-    navigate(`/article/${article.id}`, {
-      replace: true,
-    });
+    navigate(
+      `/article/${article.id}#search`,
+      {
+        replace: true,
+      }
+    );
   };
 
   return (
