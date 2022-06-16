@@ -3,7 +3,7 @@ import React from 'react';
 // Models
 import { Article as IArticle } from '../../models/articles';
 
-const TopArticle: React.FC<{
+const TopArticleCard: React.FC<{
   article: IArticle;
 }> = ({ article }) => {
   return (
@@ -45,4 +45,4 @@ const TopArticle: React.FC<{
   );
 };
 
-export default TopArticle;
+export default TopArticleCard;

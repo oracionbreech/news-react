@@ -3,8 +3,8 @@ import { useQuery } from 'react-query';
 
 // Components
 import Loading from '../components/Loading';
-import Article from '../components/Home/Article';
-import TopArticle from '../components/Home/TopArticle';
+import ArticleCard from '../components/Home/ArticleCard';
+import TopArticleCard from '../components/Home/TopArticleCard';
 // Hooks
 import { usePageTitle } from '../hooks/usePageTitle';
 
@@ -28,7 +28,7 @@ const Home = () => {
   return (
     <div>
       {data && data.articles && (
-        <TopArticle
+        <TopArticleCard
           article={
             data.articles[0] as IArticle
           }
@@ -44,7 +44,7 @@ const Home = () => {
             )
             .map((article) => {
               return (
-                <Article
+                <ArticleCard
                   key={article.title}
                   article={article}
                 />
