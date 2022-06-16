@@ -1,16 +1,18 @@
 import React from 'react';
 import { useQuery } from 'react-query';
-
 // Components
 import Loading from '../components/Loading';
 import ArticleCard from '../components/Home/ArticleCard';
 import TopArticleCard from '../components/Home/TopArticleCard';
+
 // Hooks
 import { usePageTitle } from '../hooks/usePageTitle';
 
+// Models
+import { Article as IArticle } from '../models/articles';
+
 // Services
 import { getTopArticles } from '../services/newsapi/getTopArticles';
-import { Article as IArticle } from '../models/articles';
 
 const Home = () => {
   usePageTitle('Home');
