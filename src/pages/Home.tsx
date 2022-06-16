@@ -1,14 +1,18 @@
 import React from 'react';
 import { useQuery } from 'react-query';
-import Article from '../components/Home/Article';
 
 // Components
 import Loading from '../components/Loading';
+import Article from '../components/Home/Article';
+
+// Hooks
+import { usePageTitle } from '../hooks/usePageTitle';
 
 // Services
 import { getTopArticles } from '../services/newsapi/getTopArticles';
 
 const Home = () => {
+  usePageTitle('Home');
   const { data, isLoading, error } =
     useQuery(
       'articles',
