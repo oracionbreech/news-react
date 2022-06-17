@@ -3,7 +3,7 @@ import { getTopArticles } from '../../services/newsapi/getTopArticles';
 
 test('should get all top headlines', async () => {
   const { articles } =
-    await getTopArticles();
+    await getTopArticles(5);
 
   expect(
     articles.length
