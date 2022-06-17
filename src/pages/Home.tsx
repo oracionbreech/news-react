@@ -7,13 +7,15 @@ import Loading from '../components/Loading';
 import ArticleCard from '../components/Home/ArticleCard';
 import TopArticleCard from '../components/Home/TopArticleCard';
 
+// Constants
+import { sortByOptions } from '../constants/articles';
+
 // Hooks
 import { usePageTitle } from '../hooks/usePageTitle';
 import { useNews } from '../hooks/useNews';
 
 // Models
 import { Article as IArticle } from '../models/articles';
-import { sortByOptions } from '../constants/articles';
 
 const Home = () => {
   usePageTitle('Home');
@@ -30,9 +32,8 @@ const Home = () => {
     isLoading,
     handleSubmitSearch,
     handleSortBySelect,
+    loadMore,
   } = useNews();
-
-  if (isLoading) return <Loading />;
 
   if (error)
     return <h1>An error occurred</h1>;
@@ -160,6 +161,18 @@ const Home = () => {
             </h1>
           </div>
         )}
+
+      {isLoading && <Loading />}
+
+      <div className='p-6 w-full'>
+        <button
+          type='button'
+          onClick={loadMore}
+          className='py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full'
+        >
+          Load More
+        </button>
+      </div>
     </div>
   );
 };

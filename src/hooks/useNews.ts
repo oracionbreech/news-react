@@ -62,15 +62,30 @@ export const useNews = () => {
       'publishedAt'
     );
 
+  const [pageSize, setPageSize] =
+    React.useState(19);
+
   const onSuccess = (data: {
     articles: Article[];
   }) => {
-    const hashed = data.articles.map(
-      (article) => ({
+    const newArticles =
+      data.articles.filter(
+        (newArticle) =>
+          ![
+            ...news.map(
+              (article) => article.title
+            ),
+          ].includes(newArticle.title)
+      );
+
+    const hashed = [
+      ...news,
+      ...newArticles.map((article) => ({
         ...article,
         id: md5(article.title),
-      })
-    );
+      })),
+    ];
+
     dispatch(updateArticles(hashed));
     setNews(hashed);
     data.articles = hashed;
@@ -82,7 +97,7 @@ export const useNews = () => {
     refetch,
   } = useQuery(
     'articles',
-    getTopArticles,
+    () => getTopArticles(pageSize),
     {
       onSuccess,
       enabled: false,
@@ -107,20 +122,26 @@ export const useNews = () => {
   );
 
   React.useEffect(() => {
-    setNews([]);
     if (
       search !== null &&
       !isEmpty(search)
     ) {
-      console.log(sortBy);
-
-      // TODO: search init here
       initSearch();
     } else {
       refetch();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search, sortBy]);
+  }, [search, sortBy, pageSize]);
+
+  const loadMore = () => {
+    if (pageSize + 5 <= 100) {
+      setPageSize(pageSize + 5);
+    } else {
+      setPageSize(
+        pageSize + (100 - pageSize)
+      );
+    }
+  };
 
   return {
     setSortBy,
@@ -133,5 +154,6 @@ export const useNews = () => {
     handleSortBySelect,
     error:
       topArticlesError || searchError,
+    loadMore,
   };
 };
