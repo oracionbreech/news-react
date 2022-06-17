@@ -50,7 +50,10 @@ const NavBar = () => {
             </button>
           </div>
           <div className='flex-1 flex items-center justify-center sm:items-stretch sm:justify-start'>
-            <div className='flex-shrink-0 flex items-center text-2xl text-white uppercase'>
+            <div
+              id='navbar-brand'
+              className='flex-shrink-0 flex items-center text-2xl text-white uppercase'
+            >
               News App
             </div>
             <div className='hidden sm:block sm:ml-6'>
