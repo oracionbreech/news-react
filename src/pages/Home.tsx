@@ -13,6 +13,7 @@ import { useNews } from '../hooks/useNews';
 
 // Models
 import { Article as IArticle } from '../models/articles';
+import { sortByOptions } from '../constants/articles';
 
 const Home = () => {
   usePageTitle('Home');
@@ -28,6 +29,7 @@ const Home = () => {
     error,
     isLoading,
     handleSubmitSearch,
+    handleSortBySelect,
   } = useNews();
 
   if (isLoading) return <Loading />;
@@ -36,13 +38,14 @@ const Home = () => {
     return <h1>An error occurred</h1>;
 
   return (
-    <div>
+    <div className='w-full'>
       {search !== null && (
-        <div className='p-3'>
+        <div className='p-3 flex'>
           <form
             onSubmit={
               handleSubmitSearch
             }
+            className='w-3/6'
           >
             <label
               htmlFor='default-search'
@@ -83,6 +86,33 @@ const Home = () => {
               </button>
             </div>
           </form>
+
+          <div className='flex w-2/6 items-center ml-3'>
+            <label
+              htmlFor='countries'
+              className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400'
+            >
+              Sort
+            </label>
+            <select
+              id='countries'
+              className='ml-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+              onChange={
+                handleSortBySelect
+              }
+            >
+              {sortByOptions.map(
+                (sort) => (
+                  <option
+                    key={sort.value}
+                    value={sort.value}
+                  >
+                    {sort.text}
+                  </option>
+                )
+              )}
+            </select>
+          </div>
         </div>
       )}
       {!isEmpty(news) &&

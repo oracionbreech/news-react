@@ -12,3 +12,8 @@ export interface Article {
   content: string;
   id?: string;
 }
+
+export type SortArticle =
+  | 'relevancy'
+  | 'popularity'
+  | 'publishedAt';

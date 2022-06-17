@@ -2,19 +2,22 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import md5 from 'md5';
 import { useDispatch } from 'react-redux';
-
-// Services
-import { getTopArticles } from '../services/newsapi/getTopArticles';
-
-// Store
-import { updateArticles } from '../store/articles/articleSlice';
-import { Article } from '../models/articles';
 import {
   useLocation,
   useNavigate,
 } from 'react-router-dom';
 import { isEmpty } from 'lodash';
+
+// Services
+import { getTopArticles } from '../services/newsapi/getTopArticles';
 import { getNewsByKeyWord } from '../services/newsapi/getNewsByKeyword';
+
+// Store
+import { updateArticles } from '../store/articles/articleSlice';
+import {
+  Article,
+  SortArticle,
+} from '../models/articles';
 
 export const useNews = () => {
   const dispatch = useDispatch();
@@ -25,6 +28,7 @@ export const useNews = () => {
     location.search
   ).get('query');
 
+  // This should fire when user submits search textfiel
   const handleSubmitSearch = (
     e: React.FormEvent<HTMLFormElement>
   ) => {
@@ -42,8 +46,21 @@ export const useNews = () => {
     );
   };
 
+  // Handles when sort by changes
+  const handleSortBySelect = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) =>
+    setSortBy(
+      e.target.value as SortArticle
+    );
+
   const [news, setNews] =
     React.useState<Article[]>([]);
+
+  const [sortBy, setSortBy] =
+    React.useState<SortArticle>(
+      'publishedAt'
+    );
 
   const onSuccess = (data: {
     articles: Article[];
@@ -73,21 +90,21 @@ export const useNews = () => {
   );
 
   const {
-    data,
     refetch: initSearch,
     isLoading: searchLoading,
     error: searchError,
   } = useQuery(
     'search',
     () =>
-      getNewsByKeyWord(String(search)),
+      getNewsByKeyWord(
+        String(search),
+        sortBy
+      ),
     {
       onSuccess: onSuccess,
       enabled: false,
     }
   );
-
-  console.log(data);
 
   React.useEffect(() => {
     setNews([]);
@@ -95,20 +112,25 @@ export const useNews = () => {
       search !== null &&
       !isEmpty(search)
     ) {
+      console.log(sortBy);
+
       // TODO: search init here
       initSearch();
     } else {
       refetch();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search]);
+  }, [search, sortBy]);
 
   return {
+    setSortBy,
+    sortBy,
     news,
     isLoading:
       topArticlesLoading ||
       searchLoading,
     handleSubmitSearch,
+    handleSortBySelect,
     error:
       topArticlesError || searchError,
   };
