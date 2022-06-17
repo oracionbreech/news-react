@@ -1,8 +1,6 @@
 import React from 'react';
-import { useQuery } from 'react-query';
 import { useLocation } from 'react-router-dom';
-import md5 from 'md5';
-import { useDispatch } from 'react-redux';
+import { isEmpty } from 'lodash';
 
 // Components
 import Loading from '../components/Loading';
@@ -11,15 +9,10 @@ import TopArticleCard from '../components/Home/TopArticleCard';
 
 // Hooks
 import { usePageTitle } from '../hooks/usePageTitle';
+import { useNews } from '../hooks/useNews';
 
 // Models
 import { Article as IArticle } from '../models/articles';
-
-// Services
-import { getTopArticles } from '../services/newsapi/getTopArticles';
-
-// Store
-import { updateArticles } from '../store/articles/articleSlice';
 
 const Home = () => {
   usePageTitle('Home');
@@ -30,28 +23,12 @@ const Home = () => {
     location.search
   ).get('query');
 
-  const dispatch = useDispatch();
-
-  const { data, isLoading, error } =
-    useQuery(
-      'articles',
-      getTopArticles,
-      {
-        onSuccess: (data) => {
-          const hashed =
-            data.articles.map(
-              (article) => ({
-                ...article,
-                id: md5(article.title),
-              })
-            );
-          dispatch(
-            updateArticles(hashed)
-          );
-          data.articles = hashed;
-        },
-      }
-    );
+  const {
+    news,
+    error,
+    isLoading,
+    handleSubmitSearch,
+  } = useNews();
 
   if (isLoading) return <Loading />;
 
@@ -62,7 +39,11 @@ const Home = () => {
     <div>
       {search !== null && (
         <div className='p-3'>
-          <form>
+          <form
+            onSubmit={
+              handleSubmitSearch
+            }
+          >
             <label
               htmlFor='default-search'
               className='mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300'
@@ -87,6 +68,7 @@ const Home = () => {
                 </svg>
               </div>
               <input
+                name='search'
                 type='search'
                 id='default-search'
                 className='block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
@@ -103,20 +85,21 @@ const Home = () => {
           </form>
         </div>
       )}
-      {data && data.articles && (
-        <TopArticleCard
-          article={
-            data.articles[0] as IArticle
-          }
-        />
-      )}
-      <div className='grid sm:grid-cols-2 md:grid-cols-2 gap-3 lg:grid-cols-3 p-4'>
-        {data &&
-          data.articles &&
-          data.articles
+      {!isEmpty(news) &&
+        isEmpty(search) &&
+        news && (
+          <TopArticleCard
+            article={
+              news[0] as IArticle
+            }
+          />
+        )}
+      {!isEmpty(news) && (
+        <div className='grid sm:grid-cols-2 md:grid-cols-2 gap-3 lg:grid-cols-3 p-4'>
+          {news
             .slice(
-              1,
-              data.articles.length
+              !isEmpty(search) ? 0 : 1,
+              news.length
             )
             .map((article) => {
               return (
@@ -126,7 +109,27 @@ const Home = () => {
                 />
               );
             })}
-      </div>
+        </div>
+      )}
+      {isEmpty(news) &&
+        !isLoading &&
+        search === null && (
+          <div className='w-full flex justify-center'>
+            <h1 className='mt-10 text-xl'>
+              Nothing to see here. :(
+            </h1>
+          </div>
+        )}
+      {isEmpty(news) &&
+        !isLoading &&
+        search !== null && (
+          <div className='w-full flex justify-center'>
+            <h1 className='mt-10 text-xl'>
+              Found now news with the
+              keyword {search}.
+            </h1>
+          </div>
+        )}
     </div>
   );
 };
